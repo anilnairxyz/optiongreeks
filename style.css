@@ -1,0 +1,43 @@
+            body        { margin: 0; padding: 0; background: #e4e4e4; font-family: Verdana, Tahoma, Arial; }
+            a           { margin: 0; color: #000; }
+            a:hover     { color: #c7c7c7;} 
+            p           { color: #000; }
+
+.wrapper                { width: auto; margin: 0 30px 0; }
+
+#header                 { min-height: 40px; padding: 10px 0 10px; background: #336699; }
+#header     h1          { color: #000; margin: 0; }
+
+#footer                 { min-height: 50px; background: #336699; padding: 10px 0 10px; }
+#footer     ul          { width: 360px; margin: 0 auto; padding: 0; list-style-type: none; }
+#footer     ul li       { display: inline; }
+#footer     ul li a     { padding: 0 15px; color: #fff;}
+#footer     p           { color: #443b31; width: 360px; margin: 15px auto; }
+
+#navigation             { min-height: 40px; background: #336699; overflow: hidden; }
+.navbar                 { margin: 10px 0 0 0; float: right; list-style-type: none; padding: 0; }
+.navbar     li          { display: inline; margin: 0; }
+.navbar     li a        { color: #fff; text-decoration: none; padding: 12px;}
+.navbar     li a:hover  { background: #e4e4e4; color: #000; padding: 12px; }
+
+#content                { width: auto; margin: 0 auto; overflow: auto; }
+#content    h2          { margin: 15px 0 10px 0; color: #000; }
+#content    p           { margin: 0; padding: 0; }
+
+#compute                { margin: 0 0 0 40px; padding: 0; float:left; min-height: 400px; }
+#compute    input       { padding: 0; margin: 1px; font-family: monospace; }
+#compute    table       { padding: 0; margin-top: 40px; }
+#compute    table td    { min-width: 50px; }
+.submit                 { background: #999999; min-width: 100px; color: #000; }
+
+#paygen                 { margin: 0; padding: 0; float:left; font-size: 80%; }
+#paygen     input       { font-family: monospace; width: 78px }
+.adjust                 { background: #999999; min-width: 80px; color: #000; }
+#paytrd                 { margin: 0 0 0 20px; padding: 0; float:left;  font-size: 80%; }
+#paytrd     input       { font-family: monospace; }
+#paytrd     select      { font-family: monospace; width:70px }
+.legs                   { margin: 0 2px 0 0; padding: 0; float:left; }
+.keys                   { margin: 0 0 0 20px; padding: 0; float:left; }
+
+#colFilter              { width: 800px; padding: 25px 0 0 600px; }
+#chart_div              { width: 800px; height:500px; padding: 0 0 15px; }
