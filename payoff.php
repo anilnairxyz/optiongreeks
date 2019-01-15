@@ -1,5 +1,6 @@
-<?php include('header.php'); ?>
-<?php include('functions-options.php'); ?>
+<?php $page="payoff"; ?>
+<?php include('layout/header.php'); ?>
+<?php include('includes/greeks.php'); ?>
 
 <?php
 /*--===============================================================-*/
@@ -37,27 +38,17 @@
     if (isset($_POST['stktx'])) { $stktx = $_POST['stktx']; } else { $stktx = 'ign'; }
 ?>
 
-<!--===============================================================-->
-<!--Form Body -->
-<!--===============================================================-->
-
 <!--Payoff Page Content-->
-<div id="content">
-<div class="wrapper">
-<form action="payoff.php" method="post">
+<div id="underlying">
+    <h2>Plot Payoff</h2>
+    <form action="payoff.php" method="post">
+        <?php include('includes/underlying.php'); ?>
+    </form>
+</div> <!--underlying-->
 
-<div id="paygen">
-<h2>General Parameters</h2>
-   <p><input type="text" name="ulprice"    value="<?php echo $ulprice;?>" size="10" maxlength="20"/>Underlying Price</p>
-   <p><input type="text" name="days"       value="<?php echo $days;?>"    size="10" maxlength="20"/>Days to Expiry</p>
-   <p><input type="text" name="rfrate"     value="<?php echo $rate_in;?>" size="10" maxlength="20"/>Interest Rate (%)</p>
-   <p><input type="text" name="divrate"    value="<?php echo $div_in;?>"  size="10" maxlength="20"/>Dividend Yield (%)</p>
-   <p><input type="text" name="volatility" value="<?php echo $vol_in;?>"  size="10" maxlength="20"/>Expected Volatility (%)</p>
-   <p><input name="plot" type="submit"     value="PLOT" class="submit"/></p>
-</div> <!--paygen-->
-
-<div id="paytrd">
-<h2>Trade Details</h2>
+<div id="trade_legs">
+   <h2>Trade Details</h2>
+   <form action="payoff.php" method="post">
    <?php for($i=1;$i<$legs;$i++):?> 
    <div class="legs">
       <p><select name="trade<?php echo $i?>">
@@ -104,10 +95,8 @@
       <p><input  type="radio" name="stktx" value="ign" <?php if ($stktx=="ign") echo "checked";?> >Ignore Taxes</p>
    </div> <!--keys-->
 
-</div> <!--paytrd-->
-</form>
-</div> <!--wrapper-->
-</div> <!--content-->
+   </form>
+</div> <!--trade_legs-->
 
 <?php
 /*--===============================================================-*/
@@ -197,8 +186,7 @@
 <!-- Plot -->
 <!--===============================================================-->
 
-<div id="charts">
-<div class="wrapper">
+<div id="chart">
     <!--Chart JavaScript-->
     <script type="text/javascript"
             src="https://www.google.com/jsapi?autoload={ 'modules':[{
@@ -301,7 +289,6 @@
 
 <div id="colFilter"></div>
 <div id="chart_div"></div>
-</div> <!--wrapper-->
-</div> <!--charts-->
+</div> <!--chart-->
 
-<?php include('footer.php'); ?>
+<?php include('layout/footer.php'); ?>

@@ -1,5 +1,6 @@
-<?php include('header.php'); ?>
-<?php include('functions-options.php'); ?>
+<?php $page="iv-calc"; ?>
+<?php include('layout/header.php'); ?>
+<?php include('includes/greeks.php'); ?>
 
 <?php
     /* Parameters initialization */
@@ -34,27 +35,18 @@
 ?>
 
 <!--IV Calculation Page Content-->
-<div id="content">
-<div class="wrapper">
-<h2>Calculate Implied Volatility</h2>
+<div id="underlying">
+    <h2>Calculate Implied Volatility</h2>
+    <form action="iv-calc.php" method="post">
+        <?php include('includes/underlying.php'); ?>
+    </form>
+</div> <!--underlying-->
 
-<div id="compute">
-<form action="iv-calc.php" method="post">
-   <p><input type="radio" name="optyp"   value="call" <?php if ($optyp=="call") echo "checked";?> >Call</p>
-   <p><input type="radio" name="optyp"   value="put"  <?php if ($optyp=="put")  echo "checked";?> >Put</p>
-   <p><input type="text"  name="ulprice" value="<?php echo $ulprice;?>" size="10"  maxlength="20"/>Underlying Price</p>
-   <p><input type="text"  name="strike"  value="<?php echo $strike;?>"  size="10"  maxlength="20"/>Strike Price</p>
-   <p><input type="text"  name="days"    value="<?php echo $days;?>"    size="10"  maxlength="20"/>Days to Expiry</p>
-   <p><input type="text"  name="rfrate"  value="<?php echo $rate_in;?>" size="10"  maxlength="20"/>Interest Rate (%)</p>
-   <p><input type="text"  name="divrate" value="<?php echo $div_in;?>"  size="10"  maxlength="20"/>Dividend Yield (%)</p>
-   <p><input type="text"  name="opprice" value="<?php echo $opprice;?>" size="10"  maxlength="20"/>Option Price</p>
-   <p><input type="submit" value="CALCULATE" class="submit"/></p>
-</form>
-</br>
-<p><strong>Implied Volatility <?php if ($iv_value == 300) echo "> "; else echo "= "; echo $iv_value; ?> %</strong></p>
+<div id="trade_legs">
+    <p><strong>Implied Volatility <?php if ($iv_value == 300) echo "> "; else echo "= "; echo $iv_value; ?> %</strong></p>
+</div> <!--trade_legs-->
 
-</div> <!--compute-->
-</div> <!--wrapper-->
-</div> <!--content-->
+<div id="chart">
+</div> <!--chart-->
 
-<?php include('footer.php'); ?>
+<?php include('layout/footer.php'); ?>

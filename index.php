@@ -1,22 +1,52 @@
-<?php include('header.php'); ?>
+<?php $page="opprice"; ?>
+<?php include('layout/header.php'); ?>
+<?php include('includes/greeks.php'); ?>
 
-<!--Home Page Content-->
-<div id="content">
-<div class="wrapper">
-<h2>Option Strategies</h2>
+<?php
+    /* Parameters initialization */
+    if (isset($_POST['optyp']))      { $optyp   = $_POST['optyp'];      } else { $optyp   = 'call'; }
+    if (isset($_POST['ulprice']))    { $ulprice = $_POST['ulprice'];    } else { $ulprice = 9000;   }
+    if (isset($_POST['strike']))     { $strike  = $_POST['strike'];     } else { $strike  = 9000;   }
+    if (isset($_POST['days']))       { $days    = $_POST['days'];       } else { $days    = 30;     }
+    if (isset($_POST['rfrate']))     { $rate_in = $_POST['rfrate'];     } else { $rate_in = 8;      }
+    if (isset($_POST['divrate']))    { $div_in  = $_POST['divrate'];    } else { $div_in  = 0;      }
+    if (isset($_POST['volatility'])) { $vol_in  = $_POST['volatility']; } else { $vol_in  = 15;     }
+    $t2exp     = $days/365;
+    $rfrate    = $rate_in/100;
+    $dvrate    = $div_in/100;
+    $vol       = $vol_in/100;
 
-<p>
-There are option strategies that can be used by regular long term equity investors.
-Such an investor would use options primarily to reduce the risk of his portfolio with 
-some compromise made to the expected returns.
-</p>
+    /* Option Price calculation */
+    if ($optyp=="call") { $iscall = 1; } else { $iscall = 0; }
+    if ($optyp=="put")  { $isput  = 1; } else { $isput  = 0; }
+    $opprice   = optionprice($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp,$iscall,$isput);
+    $opdelta   = optiondelta($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp,$iscall,$isput, 0);
+    $opgamma   = optiongamma($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp);
+    $optheta   = optiontheta($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp,$iscall,$isput);
+    $opvega    =  optionvega($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp);
+    $oprho     =   optionrho($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp,$iscall,$isput);
+?>
 
-<p>
-</p>
+<!--Option Price Calculation Page Content-->
+<div id="underlying">
+    <h2>Calculate Option Price</h2>
+    <form action="index.php" method="post">
+        <?php include('includes/underlying.php'); ?>
+    </form>
+</div> <!--underlying-->
 
-<h3></h3>
+<div id="trade_legs">
+   <table> 
+      <tr> <td><strong>Option Price</strong></td> <td> : </td> <td><strong><?php echo sprintf("%.2f", $opprice); ?></strong></td></tr>
+      <tr> <td>Delta</td> <td> : </td> <td><?php echo sprintf("%.4f", $opdelta); ?> </td> </tr>
+      <tr> <td>Gamma</td> <td> : </td> <td><?php echo sprintf("%.4f", $opgamma); ?> </td> </tr>
+      <tr> <td>Theta</td> <td> : </td> <td><?php echo sprintf("%.4f", $optheta); ?> </td> </tr>
+      <tr> <td>Vega </td> <td> : </td> <td><?php echo sprintf("%.4f", $opvega ); ?> </td> </tr>
+      <tr> <td>Rho  </td> <td> : </td> <td><?php echo sprintf("%.4f", $oprho  ); ?> </td> </tr>
+   </table>
+</div> <!--trade_legs-->
 
-</div>
-</div>
+<div id="chart">
+</div> <!--chart-->
 
-<?php include('footer.php'); ?>
+<?php include('layout/footer.php'); ?>
