@@ -23,8 +23,8 @@
     $opdelta   = optiondelta($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp,$iscall,$isput, 0);
     $opgamma   = optiongamma($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp);
     $optheta   = optiontheta($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp,$iscall,$isput);
-    $opvega    =  optionvega($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp);
-    $oprho     =   optionrho($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp,$iscall,$isput);
+    $opvega    = optionvega($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp);
+    $oprho     = optionrho($ulprice,$strike,$vol,$rfrate,$dvrate,$t2exp,$iscall,$isput);
 ?>
 
 <!--Option Price Calculation Page Content-->
@@ -36,14 +36,7 @@
 </div> <!--underlying-->
 
 <div id="trade_legs">
-   <table> 
-      <tr> <td><strong>Option Price</strong></td> <td> : </td> <td><strong><?php echo sprintf("%.2f", $opprice); ?></strong></td></tr>
-      <tr> <td>Delta</td> <td> : </td> <td><?php echo sprintf("%.4f", $opdelta); ?> </td> </tr>
-      <tr> <td>Gamma</td> <td> : </td> <td><?php echo sprintf("%.4f", $opgamma); ?> </td> </tr>
-      <tr> <td>Theta</td> <td> : </td> <td><?php echo sprintf("%.4f", $optheta); ?> </td> </tr>
-      <tr> <td>Vega </td> <td> : </td> <td><?php echo sprintf("%.4f", $opvega ); ?> </td> </tr>
-      <tr> <td>Rho  </td> <td> : </td> <td><?php echo sprintf("%.4f", $oprho  ); ?> </td> </tr>
-   </table>
+    <?php include('includes/calculations.php'); ?>
 </div> <!--trade_legs-->
 
 <div id="chart">

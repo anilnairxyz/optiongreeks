@@ -43,7 +43,7 @@
 </div> <!--underlying-->
 
 <div id="trade_legs">
-    <p><strong>Implied Volatility <?php if ($iv_value == 300) echo "> "; else echo "= "; echo $iv_value; ?> %</strong></p>
+    <?php include('includes/calculations.php'); ?>
 </div> <!--trade_legs-->
 
 <div id="chart">

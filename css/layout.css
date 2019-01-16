@@ -1,0 +1,150 @@
+#container {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "underlying chart"
+        "trade_legs chart"
+        "footer footer";
+    height: 100vh;
+    grid-template-columns: 2fr 3fr;
+    grid-template-rows: auto auto 1fr 40px;
+    grid-gap: 10px;
+}
+
+header {
+    grid-area: header;
+    font-family: 'Fjalla One', sans-serif;
+    background: var(--header_base);
+    opacity: var(--header_opacity);
+    padding: 0 1rem;
+}
+
+.navbar {
+	font-size: 22px;
+	padding-bottom: 0;
+}
+
+.logo {
+    display: inline-block;
+    font-size: 22px;
+    margin-left: 20px;
+}
+.logo img {
+	height: 50px;
+}
+
+.navbar-toggle {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer; 
+    color: var(--link_text);
+    font-size: 30px;
+}
+
+.main-nav {
+    list-style-type: none;
+	display: none;
+}
+
+.nav-links, .logo {
+    text-decoration: none;
+	text-transform: uppercase;
+	color: var(--link_text);
+}
+
+.main-nav .active {
+    pointer-events: none;
+    cursor: default;
+	color: var(--active_link);
+}
+
+.main-nav li {
+    text-align: center;
+    margin: 15px auto;
+}
+
+.show_navbar {
+    display: block;
+}
+
+#underlying {
+    grid-area: underlying;
+    width: 100%;
+    margin-left: 0.5rem;
+	padding-left: 30px;
+    background: var(--underlying_base);
+}
+
+#trade_legs {
+    grid-area: trade_legs;
+    width: 100%;
+    margin-left: 0.5rem;
+	padding-left: 30px;
+    background: var(--legs_base);
+}
+
+#chart {
+    grid-area: chart;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    background: var(--chart_base);
+}
+
+footer {
+    background: var(--footer_base);
+    opacity: var(--footer_opacity);
+    grid-area: footer;
+    color: var(--footer_text);
+    font-size: 0.8rem;
+	padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+    #container {
+        grid-template-areas:
+            "header"
+            "underlying"
+            "trade_legs"
+            "chart"
+            "footer";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(75px, auto) minmax(75px, auto) 1fr 40px;
+    }
+	.logo img {
+       margin-top: 6px;
+	}
+    #chart {
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+    	height: 70px;
+        align-items: center;
+    }
+	.logo {
+        margin-top: 10px;
+	}
+    .main-nav {
+        display: flex;
+        margin-right: 30px;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .main-nav li {
+        margin: 0;
+    }
+    .nav-links {
+        margin-left: 40px;
+    }
+   .navbar-toggle {
+       display: none;
+    }
+    .logo:hover, .nav-links:hover {
+        color: var(--hover_link);
+    }
+}

@@ -1,0 +1,47 @@
+:root {
+    --golden:           rgba(219, 181, 57, 1);
+    --body_text:        HSL(225, 6%, 21%);          /* body text color - dark grey */
+ 	--link_text:        rgba(255, 255, 255, 0.7);   /* header link text color */
+	--hover_link:       rgba(255, 255, 255, 0.9);   /* hover over links */
+	--active_link:      var(--golden);              /* current page */
+    --header_base:      rgba(0, 0, 0, 0.9);         /* header background color */
+    --footer_base:      rgba(0, 0, 0, 0.5);         /* footer background color */
+    --footer_text:      white;
+    --underlying_base:  #F9F5F0;
+    --legs_base:        #F9F5F0;
+    --chart_base:       #F2EAD3;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-size: 1em;
+    line-height: 1.5;
+    height: 100%;
+}
+
+body {
+    color: var(--body_text);
+    font-family: Montserrat, sans-serif;
+    font-size: 17px;
+    margin: 0;
+    padding: 0;
+}
+
+@supports(display: grid) {
+    .notice {
+        display: none;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.text-center, footer {
+    text-align: center;
+}

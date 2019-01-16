@@ -1,0 +1,47 @@
+#chart, #underlying, #trade_legs {
+    text-transform: uppercase;
+    color: var(--body_text);;
+}
+
+#chart {
+    display: flex;
+    align-items: center;
+	flex-direction: column;
+}
+
+#underlying .ul-flex-row, #trade_legs .ca-flex-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#underlying .ul-flex-col1, #trade_legs .ca-flex-col1 {
+	width: 120px;
+	flex: 0 0 120px;
+}
+
+#underlying .ul-flex-col2, #trade_legs .ca-flex-col2 {
+	flex: 1;
+}
+
+#underlying input[type=submit] {
+  margin-left: auto;
+  padding: 8px 16px;
+  border: none;
+  background: #333;
+  color: #f2f2f2;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  border-radius: 2px;
+}
+
+#colFilter {
+  width:800px;
+  padding:25px 0 0 auto; 
+}
+
+#chart_div {
+  width:800px;
+  height:500px;
+  padding:0 0 15px;
+}
