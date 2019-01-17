@@ -9,7 +9,7 @@
 	flex-direction: column;
 }
 
-#underlying .ul-flex-row, #trade_legs .ca-flex-row {
+#underlying .ul-flex-row, #trade_legs .ca-flex-row, #trade_legs .tl-flex-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -20,7 +20,12 @@
 	flex: 0 0 120px;
 }
 
-#underlying .ul-flex-col2, #trade_legs .ca-flex-col2 {
+#trade_legs .tl-flex-col {
+	width: 70px;
+	flex: 0 0 70px;
+}
+
+#underlying .ul-flex-col2, #trade_legs .ca-flex-col2, #trade_legs .tl-flex-col0 {
 	flex: 1;
 }
 

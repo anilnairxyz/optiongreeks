@@ -18,14 +18,15 @@
     $vol       = $vol_in/100;
 ?>
 <?php 
-    $legs      = 4;
+    $legs      = 5;
     $strats    = 2;
 ?>
 <?php 
     /* Trade Details Form initialization */
-    for($j=1;$j<=$strats;$j++): 
-      if ($j==1) { $typi = 'call'; } else { $typi = 'put'; }
-      for($i=1;$i<=$legs;$i++): 
+    for($j=1; $j<=$strats; $j++): 
+      if ($j%2==1) { $typi = 'call'; } else { $typi = 'put'; }
+      for($i=1; $i<=$legs; $i++): 
+        if ($i!=1) { $typi = 'none'; }
         if (isset($_POST['trade'.$i.'_'.$j])) { $trade[$i+$legs*($j-1)] = $_POST['trade'.$i.'_'.$j]; } else { $trade[$i+$legs*($j-1)] = $typi; }
         if (isset($_POST['pos'.$i.'_'.$j]))   { $pos[$i+$legs*($j-1)]   = $_POST['pos'.$i.'_'.$j];   } else { $pos[$i+$legs*($j-1)]   = 1;      }
         if (isset($_POST['sk'.$i.'_'.$j]))    { $sk[$i+$legs*($j-1)]    = $_POST['sk'.$i.'_'.$j];    } else { $sk[$i+$legs*($j-1)]    = 9000;   }
@@ -34,70 +35,24 @@
         if (isset($_POST['brk'.$i.'_'.$j]))   { $brk[$i+$legs*($j-1)]   = $_POST['brk'.$i.'_'.$j];   } else { $brk[$i+$legs*($j-1)]   = 0;      }
       endfor;
     endfor;
+	/*
     if (isset($_POST['opttx'])) { $opttx = $_POST['opttx']; } else { $opttx = 'ign'; }
     if (isset($_POST['stktx'])) { $stktx = $_POST['stktx']; } else { $stktx = 'ign'; }
+	 */
+    $opttx = 'ign';
+    $stktx = 'ign';
 ?>
 
 <!--Compare Page Content-->
 <div id="underlying">
-    <h2>Plot Payoff</h2>
+    <h2>Plot Comparison</h2>
     <form action="compare.php" method="post">
-        <?php include('includes/underlying.php'); ?>
-    </form>
+    <?php include('includes/underlying.php'); ?>
 </div> <!--underlying-->
 
 <div id="trade_legs">
-<?php for($j=1;$j<=$strats;$j++):?> 
-<div id="paytrd">
-  <h2>Trade Details: Strategy <?php echo $j?></h2>
-    <form action="compare.php" method="post">
-    <?php for($i=1;$i<$legs;$i++):?> 
-    <div class="legs">
-        <p><select name="trade<?php echo $i.'_'.$j?>">
-        <option   value="call"  <?php if ($trade[$i+$legs*($j-1)]=="call")  echo "selected"?> >Call</option>
-        <option   value="put"   <?php if ($trade[$i+$legs*($j-1)]=="put")   echo "selected"?> >Put</option>
-        <option   value="stock" <?php if ($trade[$i+$legs*($j-1)]=="stock") echo "selected"?> >Stock</option>
-        <option   value="none"  <?php if ($trade[$i+$legs*($j-1)]=="none")  echo "selected"?> >None</option>
-        </select></p>
-        <p><select name="pos<?php echo $i.'_'.$j?>">
-        <option   value="-1" <?php if ($pos[$i+$legs*($j-1)]=="-1") echo "selected"?> >Long</option>
-        <option   value="1"  <?php if ($pos[$i+$legs*($j-1)]=="1")  echo "selected"?> >Short</option>
-        </select></p>
-        <p><input  name="sk<?php  echo $i.'_'.$j?>" type="text" value=<?php echo $sk[$i+$legs*($j-1)];?>  size="7" maxlength="10"></p>
-        <p><input  name="vm<?php  echo $i.'_'.$j?>" type="text" value=<?php echo $vm[$i+$legs*($j-1)];?>  size="7" maxlength="10"></p>
-        <p><input  name="opr<?php echo $i.'_'.$j?>" type="text" value=<?php echo $opr[$i+$legs*($j-1)];?> size="7" maxlength="10"></p>
-        <p><input  name="brk<?php echo $i.'_'.$j?>" type="text" value=<?php echo $brk[$i+$legs*($j-1)];?> size="7" maxlength="10"></p>
-     </div> <!--legs-->
-     <?php endfor;?>
-     <div class="legs">
-        <p><select name="trade<?php echo $legs.'_'.$j?>">
-        <option   value="call"  <?php if ($trade[$legs*$j]=="call")  echo "selected"?> >Call</option>
-        <option   value="put"   <?php if ($trade[$legs*$j]=="put")   echo "selected"?> >Put</option>
-        <option   value="stock" <?php if ($trade[$legs*$j]=="stock") echo "selected"?> >Stock</option>
-        <option   value="none"  <?php if ($trade[$legs*$j]=="none")  echo "selected"?> >None</option>
-        </select>Type</p>
-        <p><select name="pos<?php echo $legs.'_'.$j?>">
-        <option   value="-1" <?php if ($pos[$legs*$j]=="-1") echo "selected"?> >Long</option>
-        <option   value="1"  <?php if ($pos[$legs*$j]=="1")  echo "selected"?> >Short</option>
-        </select>Position</p>
-        <p><input  name="sk<?php  echo $legs.'_'.$j?>" type="text" value=<?php echo $sk[$legs*$j];?>  size="7" maxlength="10">Strike Price</p>
-        <p><input  name="vm<?php  echo $legs.'_'.$j?>" type="text" value=<?php echo $vm[$legs*$j];?>  size="7" maxlength="10">Volume</p>
-        <p><input  name="opr<?php echo $legs.'_'.$j?>" type="text" value=<?php echo $opr[$legs*$j];?> size="7" maxlength="10">Trade Price</p>
-        <p><input  name="brk<?php echo $legs.'_'.$j?>" type="text" value=<?php echo $brk[$legs*$j];?> size="7" maxlength="10">Brokerage</p>
-     </div> <!--legs-->
-     <?php if ($j==$strats):?>
-       <div class="keys">
-          <p>For Options</p>
-          <p><input  type="radio" name="opttx" value="use" <?php if ($opttx=="use") echo "checked";?> >Compute Taxes</p>
-          <p><input  type="radio" name="opttx" value="ign" <?php if ($opttx=="ign") echo "checked";?> >Ignore Taxes</p>
-          <p>For Stocks</p>
-          <p><input  type="radio" name="stktx" value="use" <?php if ($stktx=="use") echo "checked";?> >Compute Taxes</p>
-          <p><input  type="radio" name="stktx" value="ign" <?php if ($stktx=="ign") echo "checked";?> >Ignore Taxes</p>
-       </div> <!--keys-->
-     <?php endif;?>
-     </form>
-</div> <!--paytrd-->
-<?php endfor;?>
+    <?php include('includes/strategies.php'); ?>
+    </form>
 </div> <!--trade_legs-->
 
 <?php
@@ -116,7 +71,7 @@
     $stktrn           = 0.013905/100;  // transaction tax + stamp (STOCKS)
 
     /* flags for type of trade and computing taxes */
-    for($l=1;$l<=$legs*$strats;$l++):
+    for($l=1; $l<=$legs*$strats; $l++):
       if ($trade[$l]=='none') { $samps[$l] = $ulprice; } else { $samps[$l] = $sk[$l]; }
       if ($trade[$l]=='stock') { $isstk[$l] = 1; $samps[$l] = $opr[$l]; } else { $isstk[$l] = 0; }
       if ($trade[$l]=='call') { $iscall[$l] = 1; } else { $iscall[$l] = 0; }
@@ -131,13 +86,13 @@
     $lrange           = round(min(min($samps),$ulprice) * 0.85);
     $hrange           = round(max(max($samps),$ulprice) * 1.15);
     $nrows            = 100;
-    $steps            = ceil(sprintf("%.2f",($hrange-$lrange)/$nrows));
+    $steps            = ceil(sprintf("%.2f", ($hrange-$lrange)/$nrows));
     /* near and far dates for plots */
-    $neardt           = ceil(sprintf("%.2f",$days*4/5));
-    $fardt            = ceil(sprintf("%.2f",$days*1/5));
+    $neardt           = ceil(sprintf("%.2f", $days*4/5));
+    $fardt            = ceil(sprintf("%.2f", $days*1/5));
 
-    for($j=1;$j<=$strats;$j++): 
-      for($k=1;$k<=$legs;$k++):
+    for($j=1; $j<=$strats; $j++): 
+      for($k=1; $k<=$legs; $k++):
         $l              = $k+$legs*($j-1);
         /* generate costs of opening trade */
         $taxst          = -($brk[$l]*$sertx)-((($trntx*$otxfl*$isopt[$l])+($stktrn*$stxfl*$isstk[$l]))*$opr[$l]*$vm[$l]);
@@ -145,7 +100,7 @@
         $brkst          = -$brk[$l];
         $prcst          = $pos[$l]*$opr[$l]*$vm[$l];
 
-        for($i=1;$i<=$nrows;$i++):
+        for($i=1; $i<=$nrows; $i++):
 
           /* generate x-axis values */
           $xaxis[$i]    = $lrange+$steps*$i;
@@ -179,8 +134,8 @@
           ${'delta'.$j}[$i]    = ${'delta'.$j}[$i]-$pos[$l]*$vm[$l]*(optiondelta($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp,$iscall[$l],$isput[$l],$isstk[$l]));
           ${'gamma'.$j}[$i]    = ${'gamma'.$j}[$i]-$pos[$l]*$vm[$l]*(optiongamma($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp))*$isopt[$l];
           ${'theta'.$j}[$i]    = ${'theta'.$j}[$i]-$pos[$l]*$vm[$l]*(optiontheta($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp,$iscall[$l],$isput[$l]));
-          ${'vega'.$j}[$i]     = ${'vega'.$j}[$i] -$pos[$l]*$vm[$l]* (optionvega($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp))*$isopt[$l];
-          ${'rho'.$j}[$i]      = ${'rho'.$j}[$i]  -$pos[$l]*$vm[$l]*  (optionrho($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp,$iscall[$l],$isput[$l]));
+          ${'vega'.$j}[$i]     = ${'vega'.$j}[$i]-$pos[$l]*$vm[$l]*(optionvega($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp))*$isopt[$l];
+          ${'rho'.$j}[$i]      = ${'rho'.$j}[$i]-$pos[$l]*$vm[$l]*(optionrho($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp,$iscall[$l],$isput[$l]));
         endfor; 
 
       endfor; 
@@ -206,14 +161,14 @@
         var data = new google.visualization.arrayToDataTable([
           <?php 
             echo "['Price'";
-            for($j=1;$j<=$strats;$j++): 
+            for($j=1; $j<=$strats; $j++): 
                 echo ",'Strategy ".$j." @Expiry', 'Strategy ".$j." @".$fardt."days', 'Strategy ".$j." @".$neardt."days'
                       ,'Strategy ".$j." Delta', 'Strategy ".$j." Gamma', 'Strategy ".$j." Theta', 'Strategy ".$j." Vega', 'Strategy ".$j." Rho'";
             endfor; 
                 echo "],";
-            for($i=1;$i<$nrows;$i++): 
+            for($i=1; $i<$nrows; $i++): 
                 echo "[".$xaxis[$i].",";
-              for($j=1;$j<=$strats;$j++): 
+              for($j=1; $j<=$strats; $j++): 
                 echo   sprintf("%.2f",${'atexp'.$j}[$i]).",".sprintf("%.2f",${'atfar'.$j}[$i]).","
                       .sprintf("%.2f",${'atnear'.$j}[$i]).",".sprintf("%.3f",${'delta'.$j}[$i]).",".sprintf("%.6f",${'gamma'.$j}[$i]).","
                       .sprintf("%.2f",${'theta'.$j}[$i]).",".sprintf("%.2f",${'vega'.$j}[$i]).",".sprintf("%.2f",${'rho'.$j}[$i]).",";
@@ -221,7 +176,7 @@
                 echo "],";
             endfor; 
                 echo "[".$xaxis[$nrows].",";
-              for($j=1;$j<=$strats;$j++): 
+              for($j=1; $j<=$strats; $j++): 
                 echo   sprintf("%.2f",${'atexp'.$j}[$nrows]).",".sprintf("%.2f",${'atfar'.$j}[$nrows]).","
                       .sprintf("%.2f",${'atnear'.$j}[$nrows]).",".sprintf("%.3f",${'delta'.$j}[$nrows]).",".sprintf("%.6f",${'gamma'.$j}[$nrows]).","
                       .sprintf("%.2f",${'theta'.$j}[$nrows]).",".sprintf("%.2f",${'vega'.$j}[$nrows]).",".sprintf("%.2f",${'rho'.$j}[$nrows]).",";
@@ -257,7 +212,7 @@
               chartArea:  { width: '80%', height: '80%' },
               hAxis:      { textStyle: { fontSize: '10' } },
               vAxis:      { textStyle: { fontSize: '10' } },
-              explorer:   {}
+			  explorer: { actions: ['dragToZoom', 'rightClickToReset']}
             }
         });
         

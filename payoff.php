@@ -19,37 +19,46 @@
 ?>
 <?php 
     /* Initialize number of trade legs */
+	/*
     $_SESSION['trlegs'] = ((isset($_SESSION['trlegs'])) ? $_SESSION['trlegs'] : 5);
     if (isset($_POST['addtr']) && ($_SESSION['trlegs']<10)) { $_SESSION['trlegs']++; }
     if (isset($_POST['remtr']) && ($_SESSION['trlegs']>1 )) { $_SESSION['trlegs']--; }
     $legs = $_SESSION['trlegs'];
+	*/
+    $legs = 5;
 ?>
 <?php 
     /* Trade Details Form initialization */
-    for($i=1;$i<=$legs;$i++): 
-      if (isset($_POST['trade'.$i])) { $trade[$i] = $_POST['trade'.$i]; } else { $trade[$i] = 'call'; }
+    for($i=1; $i<=$legs; $i++): 
+	  if ($i == 1) {
+      	if (isset($_POST['trade'.$i])) { $trade[$i] = $_POST['trade'.$i]; } else { $trade[$i] = 'call'; }
+	  } else {
+      	if (isset($_POST['trade'.$i])) { $trade[$i] = $_POST['trade'.$i]; } else { $trade[$i] = 'none'; }
+	  }
       if (isset($_POST['pos'.$i]))   { $pos[$i]   = $_POST['pos'.$i];   } else { $pos[$i]   = 1;      }
       if (isset($_POST['sk'.$i]))    { $sk[$i]    = $_POST['sk'.$i];    } else { $sk[$i]    = 9000;   }
       if (isset($_POST['vm'.$i]))    { $vm[$i]    = $_POST['vm'.$i];    } else { $vm[$i]    = 25;     }
       if (isset($_POST['opr'.$i]))   { $opr[$i]   = $_POST['opr'.$i];   } else { $opr[$i]   = 200;    }
       if (isset($_POST['brk'.$i]))   { $brk[$i]   = $_POST['brk'.$i];   } else { $brk[$i]   = 0;      }
     endfor;
+	/*
     if (isset($_POST['opttx'])) { $opttx = $_POST['opttx']; } else { $opttx = 'ign'; }
     if (isset($_POST['stktx'])) { $stktx = $_POST['stktx']; } else { $stktx = 'ign'; }
+	 */
+    $opttx = 'ign';
+    $stktx = 'ign';
 ?>
 
 <!--Payoff Page Content-->
 <div id="underlying">
     <h2>Plot Payoff</h2>
     <form action="payoff.php" method="post">
-        <?php include('includes/underlying.php'); ?>
-    </form>
+    <?php include('includes/underlying.php'); ?>
 </div> <!--underlying-->
 
 <div id="trade_legs">
     <h2>Trade Details</h2>
-    <form action="payoff.php" method="post">
-        <?php include('includes/trade_legs.php'); ?>
+    <?php include('includes/trade_legs.php'); ?>
     </form>
 </div> <!--trade_legs-->
 
@@ -66,7 +75,7 @@
     $stktrn           = 0.013905/100;  // transaction tax + stamp (STOCKS)
 
     /* flags for type of trade and computing taxes */
-    for($l=1;$l<=$legs;$l++):
+    for($l=1; $l<=$legs; $l++):
       if ($trade[$l]=='none') { $samps[$l] = $ulprice; } else { $samps[$l] = $sk[$l]; }
       if ($trade[$l]=='stock') { $isstk[$l] = 1; $samps[$l] = $opr[$l]; } else { $isstk[$l] = 0; }
       if ($trade[$l]=='call') { $iscall[$l] = 1; } else { $iscall[$l] = 0; }
@@ -78,22 +87,22 @@
     if ($stktx=="use") { $stxfl = 1; } else { $stxfl = 0; }
 
     /* range and steps for x-axis */
-    $lrange           = round(min(min($samps),$ulprice) * 0.85);
-    $hrange           = round(max(max($samps),$ulprice) * 1.15);
+    $lrange           = round(min(min($samps), $ulprice) * 0.85);
+    $hrange           = round(max(max($samps), $ulprice) * 1.15);
     $nrows            = 100;
-    $steps            = ceil(sprintf("%.2f",($hrange-$lrange)/$nrows));
+    $steps            = ceil(sprintf("%.2f", ($hrange-$lrange)/$nrows));
     /* near and far dates for plots */
-    $neardt           = ceil(sprintf("%.2f",$days*4/5));
-    $fardt            = ceil(sprintf("%.2f",$days*1/5));
+    $neardt           = ceil(sprintf("%.2f", $days*4/5));
+    $fardt            = ceil(sprintf("%.2f", $days*1/5));
 
-    for($l=1;$l<=$legs;$l++):
+    for($l=1; $l<=$legs; $l++):
       /* generate costs of opening trade */
       $taxst          = -($brk[$l]*$sertx)-((($trntx*$otxfl*$isopt[$l])+($stktrn*$stxfl*$isstk[$l]))*$opr[$l]*$vm[$l]);
       $sttst          = -((($sttsl*max($pos[$l],0))*$otxfl*$isopt[$l])+($stkstt*$stxfl*$isstk[$l]))*($opr[$l]*$vm[$l]);
       $brkst          = -$brk[$l];
       $prcst          = $pos[$l]*$opr[$l]*$vm[$l];
 
-      for($i=1;$i<=$nrows;$i++):
+      for($i=1; $i<=$nrows; $i++):
 
         /* generate x-axis values */
         $xaxis[$i]    = $lrange+$steps*$i;
@@ -127,8 +136,8 @@
         $delta[$i]    = $delta[$i]-$pos[$l]*$vm[$l]*(optiondelta($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp,$iscall[$l],$isput[$l],$isstk[$l]));
         $gamma[$i]    = $gamma[$i]-$pos[$l]*$vm[$l]*(optiongamma($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp))*$isopt[$l];
         $theta[$i]    = $theta[$i]-$pos[$l]*$vm[$l]*(optiontheta($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp,$iscall[$l],$isput[$l]));
-        $vega[$i]     = $vega[$i] -$pos[$l]*$vm[$l]* (optionvega($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp))*$isopt[$l];
-        $rho[$i]      = $rho[$i]  -$pos[$l]*$vm[$l]*  (optionrho($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp,$iscall[$l],$isput[$l]));
+        $vega[$i]     = $vega[$i]-$pos[$l]*$vm[$l]*(optionvega($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp))*$isopt[$l];
+        $rho[$i]      = $rho[$i]-$pos[$l]*$vm[$l]*(optionrho($xaxis[$i],$sk[$l],$vol,$rfrate,$dvrate,$t2exp,$iscall[$l],$isput[$l]));
 
       endfor; 
     endfor; 
@@ -190,7 +199,7 @@
               chartArea:  { width: '80%', height: '80%' },
               hAxis:      { textStyle: { fontSize: '10' } },
               vAxis:      { textStyle: { fontSize: '10' } },
-              explorer:   {}
+			  explorer: { actions: ['dragToZoom', 'rightClickToReset']}
             }
         });
         
