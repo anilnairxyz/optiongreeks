@@ -109,7 +109,7 @@ footer {
             "chart"
             "footer";
         grid-template-columns: 1fr;
-        grid-template-rows: auto minmax(75px, auto) minmax(75px, auto) 1fr 40px;
+        grid-template-rows: auto auto auto 1fr 40px;
     }
 	.logo img {
        margin-top: 6px;

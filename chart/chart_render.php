@@ -6,6 +6,9 @@
         src="https://www.google.com/jsapi?autoload={ 'modules':[{
         'name':'visualization', 'version':'1', 'packages':['corechart', 'controls'] }] }">
 </script>
+<script type="text/javascript"
+        src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+</script>
 
 <script type="text/javascript">
   google.setOnLoadCallback(drawChart);
@@ -75,6 +78,11 @@
     
     setChartView();
     columnFilter.draw();
+
+	$(window).resize(function(){
+       setChartView();
+       columnFilter.draw();
+    });
 
   }
 </script>

@@ -41,12 +41,12 @@
 }
 
 #colFilter {
-  width:800px;
+  width:95%;
   padding:25px 0 0 auto; 
 }
 
 #chart_div {
-  width:800px;
-  height:500px;
+  width:95%;
+  min-height:450px;
   padding:0 0 15px;
 }
