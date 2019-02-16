@@ -1,4 +1,4 @@
-<? if ($page == "opprice") { ?>
+<?php if ($page == "opprice") { ?>
   <div class="ca-flex-row">
     <div class="ca-flex-col1">
       <p><?php echo sprintf("%.2f", $opprice); ?></p>
@@ -47,8 +47,8 @@
 	  <p>Rho</p>
     </div> <!-- ca-flex-col2 -->
   </div> <!-- ca-flex-row -->
-<? } ?>
-<? if ($page == "iv-calc") { ?>
+<?php } ?>
+<?php if ($page == "iv-calc") { ?>
   <div class="ca-flex-row">
     <div class="ca-flex-col1">
       <p><?php if ($iv_value == 300) echo "&infin;"; else echo $iv_value; ?></p>
@@ -57,4 +57,4 @@
 	  <p>Implied Volatility</p>
     </div> <!-- ca-flex-col2 -->
   </div> <!-- ca-flex-row -->
-<? } ?>
+<?php } ?>

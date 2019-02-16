@@ -9,6 +9,7 @@
 
     <!--Title-->
     <?php $sitename="Option Greeks";?>
+    <?php $root="/greeks/";?>
     <title><?php echo $sitename?></title>
     <meta name="description" content="Option Price, Implied Volatility and Option Greeks">
 
@@ -59,33 +60,33 @@
           <a href="#" class="logo"><img src="img/main_logo.svg" alt="&pi;/4"></a>
           <ul class="main-nav" id="js-menu">
             <li>
-			<? if ($page == "opprice") { ?>
-              <a href="/" class="nav-links active">Option Price</a>
-			<? } else { ?>
-              <a href="/" class="nav-links">Option Price</a>
-			<? } ?>
+			<?php if ($page == "opprice") { ?>
+			  <a href=<?php echo $root ?> class="nav-links active">Option Price</a>
+			<?php } else { ?>
+			  <a href=<?php echo $root ?> class="nav-links">Option Price</a>
+			<?php } ?>
             </li>
 
             <li>
-			<? if ($page == "iv-calc") { ?>
-              <a href="/iv-calc.php" class="nav-links active">Implied Volatility</a>
-			<? } else { ?>
-              <a href="/iv-calc.php" class="nav-links">Implied Volatility</a>
-			<? } ?>
+			<?php if ($page == "iv-calc") { ?>
+			  <a href=<?php echo $root."iv-calc.php" ?> class="nav-links active">Implied Volatility</a>
+			<?php } else { ?>
+			  <a href=<?php echo $root."iv-calc.php" ?> class="nav-links">Implied Volatility</a>
+			<?php } ?>
             </li>
             <li>
-			<? if ($page == "payoff") { ?>
-              <a href="/payoff.php" class="nav-links active">Payoff</a>
-			<? } else { ?>
-              <a href="/payoff.php" class="nav-links">Payoff</a>
-			<? } ?>
+			<?php if ($page == "payoff") { ?>
+			  <a href=<?php echo $root."payoff.php" ?> class="nav-links active">Payoff</a>
+			<?php } else { ?>
+			  <a href=<?php echo $root."payoff.php" ?> class="nav-links">Payoff</a>
+			<?php } ?>
             </li>
             <li>
-			<? if ($page == "compare") { ?>
-              <a href="/compare.php" class="nav-links active">Compare</a>
-			<? } else { ?>
-              <a href="/compare.php" class="nav-links">Compare</a>
-			<? } ?>
+			<?php if ($page == "compare") { ?>
+			  <a href=<?php echo $root."compare.php" ?> class="nav-links active">Compare</a>
+			<?php } else { ?>
+			  <a href=<?php echo $root."compare.php" ?> class="nav-links">Compare</a>
+			<?php } ?>
             </li>
           </ul>
         </nav>
