@@ -47,6 +47,10 @@ header {
 	display: none;
 }
 
+.show_navbar {
+    display: block;
+}
+
 .nav-links, .logo {
     text-decoration: none;
 	text-transform: uppercase;
@@ -62,10 +66,6 @@ header {
 .main-nav li {
     text-align: center;
     margin: 15px auto;
-}
-
-.show_navbar {
-    display: block;
 }
 
 #underlying {

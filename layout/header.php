@@ -9,7 +9,7 @@
 
     <!--Title-->
     <?php $sitename="Option Greeks";?>
-    <?php $root="/greeks/";?>
+    <?php $root="/";?>
     <title><?php echo $sitename?></title>
     <meta name="description" content="Option Price, Implied Volatility and Option Greeks">
 
@@ -39,13 +39,6 @@
          s.parentNode.insertBefore(wf, s);
        })();
     </script>
-    <script type="text/javascript">
-       let mainNav = document.getElementById('js-menu');
-       let navBarToggle = document.getElementById('js-navbar-toggle');
-       navBarToggle.addEventListener('click', function () {
-         mainNav.classList.toggle('show_navbar');
-       });
-    </script>
   </head>
 
   <body>
@@ -61,33 +54,46 @@
           <ul class="main-nav" id="js-menu">
             <li>
 			<?php if ($page == "opprice") { ?>
-			  <a href=<?php echo $root ?> class="nav-links active">Option Price</a>
+			  <a href="<?php echo $root ?>" class="nav-links active">Option Price</a>
 			<?php } else { ?>
-			  <a href=<?php echo $root ?> class="nav-links">Option Price</a>
+			  <a href="<?php echo $root ?>" class="nav-links">Option Price</a>
 			<?php } ?>
             </li>
 
             <li>
 			<?php if ($page == "iv-calc") { ?>
-			  <a href=<?php echo $root."iv-calc.php" ?> class="nav-links active">Implied Volatility</a>
+			  <a href="<?php echo $root."iv-calc.php" ?>" class="nav-links active">Implied Volatility</a>
 			<?php } else { ?>
-			  <a href=<?php echo $root."iv-calc.php" ?> class="nav-links">Implied Volatility</a>
+			  <a href="<?php echo $root."iv-calc.php" ?>" class="nav-links">Implied Volatility</a>
 			<?php } ?>
             </li>
             <li>
 			<?php if ($page == "payoff") { ?>
-			  <a href=<?php echo $root."payoff.php" ?> class="nav-links active">Payoff</a>
+			  <a href="<?php echo $root."payoff.php" ?>" class="nav-links active">Payoff</a>
 			<?php } else { ?>
-			  <a href=<?php echo $root."payoff.php" ?> class="nav-links">Payoff</a>
+			  <a href="<?php echo $root."payoff.php" ?>" class="nav-links">Payoff</a>
 			<?php } ?>
             </li>
             <li>
 			<?php if ($page == "compare") { ?>
-			  <a href=<?php echo $root."compare.php" ?> class="nav-links active">Compare</a>
+			  <a href="<?php echo $root."compare.php" ?>" class="nav-links active">Compare</a>
 			<?php } else { ?>
-			  <a href=<?php echo $root."compare.php" ?> class="nav-links">Compare</a>
+			  <a href="<?php echo $root."compare.php" ?>" class="nav-links">Compare</a>
 			<?php } ?>
             </li>
           </ul>
         </nav>
       </header>
+    <script type="text/javascript">
+       let mainNav = document.getElementById('js-menu');
+       let navBarToggle = document.getElementById('js-navbar-toggle');
+       navBarToggle.addEventListener('click', function() {
+           if(mainNav.classList.contains('show_navbar')){
+               mainNav.classList.remove('show_navbar');
+           }
+           else{
+               mainNav.classList.add('show_navbar');
+           }
+		   console.log(mainNav.classList);
+       });
+    </script>
